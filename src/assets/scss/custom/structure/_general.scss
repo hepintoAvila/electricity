@@ -1,0 +1,26 @@
+//
+// general.scss
+//
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+.bg-primary {
+  background-color: #aad0f87b !important;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #5fdbe4;
+  border-color: rgb(129, 130, 145)a3;
+}
+// Fix event bubbling on iOS devices
+@supports (-webkit-overflow-scrolling: touch) {
+  body {
+    cursor: pointer;
+  }
+}

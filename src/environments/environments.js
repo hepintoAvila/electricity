@@ -1,0 +1,8 @@
+export const environments = {
+    production: true,
+    baseURL: 'https://api.compucel.co/v2/?',
+    loginAPI: '87737036-5743-41b5-b770-3489aecba069',
+    passwordAPI:
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzaWVzY29yIiwiaWF0IjoxNTg3MzU2NjQ5LCJleHAiOjE5MDI4ODk0NDksImF1ZCI6InNpZXNjb3IuY29tIiwic3ViIjoiaG9sbWVzcGludG9AdW5pY2VzYXIuZWR1LmNvIiwibGFzdE5hbWUiOiJUb2tlbiIsIkVtYWlsIjoiaG9sbWVzcGludG9AdW5pY2VzYXIuZWR1LmNvIiwiUm9sZSI6IkFkbWluIiwiZmlyc3ROYW1lIjoiVG9rZW4ifQ.d1ooWl98QEkcs-qxG7QcJpJeM94ltqYvmJbmIITd3U4',
+    TOKEN: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb2RlcnRoZW1lcyIsImlhdCI6MTU4NzM1NjY0OSwiZXhwIjoxOTAyODg5NDQ5LCJhdWQiOiJjb2RlcnRoZW1lcy5jb20iLCJzdWIiOiJzdXBwb3J0QGNvZGVydGhlbWVzLmNvbSIsImxhc3ROYW1lIjoiVGVzdCIsIkVtYWlsIjoic3VwcG9ydEBjb2RlcnRoZW1lcy5jb20iLCJSb2xlIjoiQWRtaW4iLCJmaXJzdE5hbWUiOiJIeXBlciJ9.P27f7JNBF-vOaJFpkn-upfEh3zSprYfyhTOYhijykdI',
+};
