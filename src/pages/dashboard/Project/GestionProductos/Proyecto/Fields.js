@@ -12,6 +12,7 @@ import { useGestionFinanciera } from '../../../../../hooks/useGestionFinanciera'
 import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
 import { queryFormSend } from '../../../../../redux/actions';
 import { VerticalForm } from '../../../../../components';
+import Swal from 'sweetalert2';
 
 const Register = (props): React$Element<React$FragmentType> => {
     const { query } = useGestionFinanciera();
@@ -39,6 +40,13 @@ const Register = (props): React$Element<React$FragmentType> => {
 
     const schemaResolver = yupResolver(yup.object().shape({}));
     const onSubmit = () => {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Enviado Solicitud...',
+            showConfirmButton: false,
+            timer: 1500
+          }) 
         dispatch(queryFormSend(...items));
         setTimeout(function () {
             setOpen(!open);

@@ -10,6 +10,7 @@ import { DashboardContext } from '../../../../../layouts/context/DashboardContex
 import { queryFormSend } from '../../../../../redux/actions';
 import { VerticalForm } from '../../../../../components';
 import FormInput from '../../../components/FormInput';
+import Swal from 'sweetalert2';
 
 const Register = (props): React$Element<React$FragmentType> => {
   const {query} = useGestionPrecios()
@@ -34,7 +35,13 @@ const Register = (props): React$Element<React$FragmentType> => {
     })
   );
   const onSubmit = () => {
-
+    Swal.fire({
+      position: 'top-center',
+      icon: 'success',
+      title: 'Enviado Solicitud...',
+      showConfirmButton: false,
+      timer: 1500
+    }) 
     dispatch(queryFormSend(...items))
 
     setTimeout(function () {

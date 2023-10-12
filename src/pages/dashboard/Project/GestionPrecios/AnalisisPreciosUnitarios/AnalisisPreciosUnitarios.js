@@ -19,6 +19,7 @@ const ActionColumn = ({ row }) => {
     const { openActions, setActions, toggle, setItemsUpdate } = useContext(DashboardContext);
 
     const toggleActions = (id, opcion) => {
+
         let array = [];
         let permiso = sessionStorage.getItem('PERMISO');
         const localPermiso = JSON.parse(permiso);

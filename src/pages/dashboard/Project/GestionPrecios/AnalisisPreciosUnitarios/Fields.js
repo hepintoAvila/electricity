@@ -12,6 +12,7 @@ import { VerticalForm } from '../../../../../components/';
 import { queryFormSend } from '../../../../../redux/actions';
 import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
 import { useGestionPrecios } from '../../../../../hooks/useGestionPrecios';
+import Swal from 'sweetalert2';
 
 function convertirACifraDecimal(numero) {
     const cifraDecimal = numero
@@ -85,6 +86,13 @@ const Register = (props) => {
 
     const schemaResolver = yupResolver(yup.object().shape({}));
     const onSubmit = () => {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Enviado Solicitud...',
+            showConfirmButton: false,
+            timer: 1500
+          }) 
         dispatch(queryFormSend(detalles));
 
         setTimeout(function () {

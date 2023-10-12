@@ -9,6 +9,7 @@ import { queryFormSend } from '../../../../../redux/actions';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useGestionFinanciera } from '../../../../../hooks/useGestionFinanciera';
+import Swal from 'sweetalert2';
 
 const Fields = (props) => {
   const {query} = useGestionFinanciera()
@@ -43,7 +44,13 @@ const schemaResolver = yupResolver(
 );
 
 const onSubmit = () => {
-
+  Swal.fire({
+    position: 'top-center',
+    icon: 'success',
+    title: 'Enviado Solicitud...',
+    showConfirmButton: false,
+    timer: 1500
+  }) 
   dispatch(queryFormSend(...items))
 
   setTimeout(function () {

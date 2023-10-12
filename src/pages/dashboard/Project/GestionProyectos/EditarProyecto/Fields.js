@@ -11,6 +11,7 @@ import { VerticalForm } from '../../../../../components/';
 //actions
 import { queryFormSend } from '../../../../../redux/actions';
 import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
+import Swal from 'sweetalert2';
 
 function convertirACifraDecimal(numero) {
   const cifraDecimal = numero.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -82,7 +83,13 @@ const {setActions,openActions} = useContext(DashboardContext);
     })
   );
   const onSubmit = () => {
-
+    Swal.fire({
+      position: 'top-center',
+      icon: 'success',
+      title: 'Enviado Solicitud...',
+      showConfirmButton: false,
+      timer: 1500
+    }) 
     dispatch(queryFormSend(detalles))
 
     setTimeout(function () {

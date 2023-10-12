@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { queryFormSend } from '../../../../../redux/actions';
 import { VerticalForm } from '../../../../../components';
 import FormInput from '../../../components/FormInput';
+import Swal from 'sweetalert2';
 
 const Register = (props): React$Element<React$FragmentType> => {
     //const { setOpen, open } = useContext(DashboardContext);
@@ -38,6 +39,13 @@ const Register = (props): React$Element<React$FragmentType> => {
 
     const schemaResolver = yupResolver(yup.object().shape({}));
     const onSubmit = () => {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Enviado Solicitud...',
+            showConfirmButton: false,
+            timer: 1500
+          }) 
         dispatch(queryFormSend(...items));
         setTimeout(function () {
             if (window.location.hash === '#/dashboard/Informes/EditarProyecto?p=1') {

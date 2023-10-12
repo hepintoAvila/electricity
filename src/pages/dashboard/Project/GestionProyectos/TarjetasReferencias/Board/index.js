@@ -43,6 +43,7 @@ const Kanban = (props): React$Element<React$FragmentType> => {
     const [tasksPerPage] = useState(200);
     const [searchTerm, setSearchTerm] = useState('');
     const [datos, setDatos] = useState([]);
+    console.log(datos)
     //const [subrows, setsubRows] = useState([]);
     const [subNumRows, setsubNumRows] = useState([]);
 

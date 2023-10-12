@@ -10,6 +10,7 @@ import { queryFormSend } from '../../../../../redux/actions';
 import { VerticalForm } from '../../../../../components';
 import FormInput from '../../../components/FormInput';
 import { useGestionFinanciera } from '../../../../../hooks/useGestionFinanciera';
+import Swal from 'sweetalert2';
 
 const Fields = (props) => {
     const { setActions, openActions } = useContext(DashboardContext);
@@ -40,6 +41,13 @@ const Fields = (props) => {
     const schemaResolver = yupResolver(yup.object().shape({}));
 
     const onSubmit = () => {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Enviado Solicitud...',
+            showConfirmButton: false,
+            timer: 1500
+          }) 
         dispatch(queryFormSend(...items));
 
         setTimeout(function () {
