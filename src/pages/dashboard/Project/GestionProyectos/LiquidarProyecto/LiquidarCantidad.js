@@ -45,7 +45,9 @@ const LiquidarCantidad = (props): React$Element<React$FragmentType> => {
         // Guardar el array actualizado en el localStorage
         localStorage.setItem('LiquidarCantidad', JSON.stringify(existingData));
         setOpen(!open);
+        ///dashboard/GestionProyecto/LiquidarProyecto?p=19&q=26
     };
+
     useEffect(() => {
         setCantidad(items[0]?.Cantidad);
         setRow(items[0]?.idApu);

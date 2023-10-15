@@ -85,11 +85,6 @@ const OrdenCompra = (props) => {
             sort: true,
         },
         {
-            Header: 'Cantidad',
-            accessor: 'Cantidad',
-            sort: false,
-        },
-        {
             Header: 'Valor',
             accessor: 'ValorUnitario',
             sort: false,

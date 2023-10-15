@@ -28,7 +28,7 @@ const FormAdd = (props) => {
         tipo={`${itemsmenuprincipal}${ids}`}
         title={idUrls.q}
         validated={true}
-        opcion={'add_conceptos'}
+        opcion={'add'}
         textBtn={'Registrar Conceptos'}
         Nomina={[]}
         Empleado={Empleado}

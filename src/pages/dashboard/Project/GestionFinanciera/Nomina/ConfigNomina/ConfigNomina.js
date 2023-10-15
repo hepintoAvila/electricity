@@ -100,7 +100,13 @@ const ConfigNomina = (props) => {
       Header: 'Total',
       accessor: 'Total',
       sort: false,
-    },{
+    },
+    {
+      Header: 'Desc Estado',
+      accessor: 'Nombre',
+      sort: false,
+    },  
+    {
       Header: 'Estado',
       accessor: 'Estado',
       sort: false,

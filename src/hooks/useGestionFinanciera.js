@@ -4,6 +4,7 @@
 import { useCallback, useState } from 'react'
 
 import { APICore } from '../helpers/api/apiCore';
+import Swal from 'sweetalert2';
 const api = new APICore();
 
 export const useGestionFinanciera = () => {
@@ -59,6 +60,9 @@ const query = useCallback((itemUrl, itemsmenuprincipal, opcion) => {
             case 'NominaEmpleadoById':
                   setNominaEmpleadoById(response)
                 break
+            case 'eliminarOrdenCompra':
+              Swal.fire('' + response[0].menssage + '');
+            break
           }
         })()
       }

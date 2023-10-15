@@ -44,9 +44,13 @@ const NominaEmpleado = (props) =>{
   const permisos = props?.permisos || {};
   const {itemsEmpleados,query} = useGestionFinanciera()
   const datos = itemsEmpleados?.data || [{}];
-  const {itemsmenuprincipal,sizePerPageList, StatusColumn,} = useContext(DashboardContext);
+  const {itemsmenuprincipal,sizePerPageList, StatusColumn,pagesInSearch} = useContext(DashboardContext);
 
-
+  let str = '#/dashboard/GestionFinanciera/LiquidaNomina';
+  let id = pagesInSearch();
+  let q = id?.replace(str, '');
+  let p = q?.split("&q=");
+  let idNomina = p[0].replace('?p=', '');
 
    const columns = [
     {
@@ -85,6 +89,11 @@ const NominaEmpleado = (props) =>{
       sort: false,
     },
     {
+      Header: 'Liquidado',
+      accessor: 'Liquidado',
+      sort: false,
+    },
+    {
       Header: 'Action',
       accessor: 'action',
       sort: false,
@@ -103,8 +112,8 @@ const NominaEmpleado = (props) =>{
   };
   useEffect(() => {
 
-    query('GestionFinanciera', 'Empleado', [{ opcion: 'consultar', obj: 'Empleado' }]);
-  }, [query])
+    query('GestionFinanciera', 'Empleado', [{ opcion: 'consultar', obj: 'Empleado',idNomina:idNomina }]);
+  }, [query,idNomina])
 
 
   return (

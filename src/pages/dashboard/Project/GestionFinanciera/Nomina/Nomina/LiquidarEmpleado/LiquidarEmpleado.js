@@ -106,7 +106,8 @@ export const LiquidarEmpleado = (props) => {
       Header: 'Salario',
       accessor: 'Salario',
       sort: false,
-    }, {
+    },
+     {
       Header: 'Status',
       accessor: 'status',
       sort: false,

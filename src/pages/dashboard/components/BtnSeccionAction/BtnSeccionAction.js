@@ -3,7 +3,7 @@ import BtnActions from '../BtnActions';
 import React from 'react';
 import BtnLink from '../BtnLink';
 
-const BtnSeccionAction = (props, children) => {
+const BtnSeccionAction = (props) => {
     const isbtnLink = props?.obj?.isbtnLink || 'N';
     //const itemsmenuprincipal = props?.obj?.itemsmenuprincipal || '';
     const descripcionbtnLink = props?.obj?.descripcionbtnLink || '';

@@ -280,6 +280,8 @@ const DashboardProvider = ({ children }) => {
         isLoading,
         itemsmenuprincipal,
         itemUrl,
+        setitemsUrl,
+        setitemsMenuPrincipal,
         eliminar,
         signUpModal,
         setSignUpModal,

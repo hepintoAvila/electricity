@@ -1,18 +1,53 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-lone-blocks */
 // @flow
-import React, { useContext, useEffect } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import React, { useContext, useEffect} from 'react';
+import { Row, Col, Card, Pagination } from 'react-bootstrap';
 
 import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
-import { useGestionFinanciera } from '../../../../../hooks/useGestionFinanciera';
 import PermisoAlert from '../../../components/PermisoAlert/PermisoAlert';
 import TableForm from '../../../components/TableForm';
+import BtnActions from '../../../components/BtnActions';
+import Swal from 'sweetalert2';
+import { useGestionFinanciera } from '../../../../../hooks/useGestionFinanciera';
+const ActionColumn = ({ row }) => {
+    const {  query } = useGestionFinanciera();
 
+    const toggleSignUp = (id) => {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Enviado Solicitud...',
+            showConfirmButton: false,
+            timer: 1500
+          }) 
+         query('GestionFinanciera', 'OrdenCompra', [{ opcion: 'delete', id: id,obj:'eliminarOrdenCompra'}]);
+    };
+
+    return (
+        <React.Fragment>
+            <Row>
+                <Pagination className="pagination-rounded mx-auto" size="sm">
+                    <Pagination.Item>
+                            <BtnActions
+                                permisos={'S'}
+                                key={`${row.cells[0].value}`}
+                                toggleActions={toggleSignUp}
+                                row={row.cells[0].value}
+                                titulo={'ELIMINAR'}
+                                descripcion={`Elimine el registro}`}
+                                icon={'mdi mdi-delete'}
+                            />
+               </Pagination.Item>
+               </Pagination>
+             </Row>       
+        </React.Fragment>
+    );
+};
 const ItemsOrdenCompra = (props) => {
-    const { itemsOrdenCompra, query } = useGestionFinanciera();
-    const datos = itemsOrdenCompra?.data || [{}];
-    const { tipo, sizePerPageList, isLoading } = useContext(DashboardContext);
+ 
+    const datos = props?.data?.Items || [{}];
+    const { tipo, sizePerPageList } = useContext(DashboardContext);
 
     const columns = [
         {
@@ -35,24 +70,27 @@ const ItemsOrdenCompra = (props) => {
             accessor: 'ValorUnitario',
             sort: false,
         },
+        {
+            Header: 'Action',
+            accessor: 'action',
+            sort: false,
+            classes: 'table-action',
+            Cell: ActionColumn,
+        },
     ];
     const toggleSignUp = () => {
         console.log('toggle');
     };
 
-    useEffect(() => {
-        query('GestionFinanciera', 'OrdenCompra', [
-            { opcion: 'consuById', obj: 'OrdenCompra', id: props?.obj?.idItems },
-        ]);
-    }, []);
 
+//console.log('datos.length',datos)
     return (
         <>
             <Row>
                 <Col>
                     <Card>
                         <Card.Body>
-                            {!isLoading && datos.length > 0 ? (
+                            {datos?.length > 0 ? (
                                 <TableForm
                                     columns={columns}
                                     data={datos}

@@ -76,7 +76,8 @@ export const LiquidarProyecto = (props) => {
     const [Proyecto, setProyecto] = useState([]);
     const [Principal, setPrincipal] = useState([]);
 
-    const { pagesInSearch, sizePerPageList, cantidad, idRow } = useContext(DashboardContext);
+    const { pagesInSearch, sizePerPageList, cantidad, idRow,setitemsMenuPrincipal, setitemsUrl } = useContext(DashboardContext);
+    
     const { isLoading, itemsGestionarProyecto, query } = useGestionProyecto();
     useEffect(() => {
         const id = pagesInSearch();
@@ -175,6 +176,9 @@ export const LiquidarProyecto = (props) => {
                 },
             ]);
             localStorage.removeItem('LiquidarCantidad');
+            setitemsUrl('LiquidarProyecto')
+            setitemsMenuPrincipal('GestionProyecto')
+            //return window.location.hash = `#/dashboard/GestionProyecto/LiquidarProyecto?p=${idProyecto}`
         } else {
             Swal.fire('No tiene items seleccionado');
         }

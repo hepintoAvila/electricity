@@ -15,7 +15,7 @@ const BtnActions = (props) => {
     let Ids = localStorage.getItem('Ids');
     const idUrls = JSON.parse(Ids);
     let q = Number(idUrls?.q) === 0 ? props?.row : idUrls?.q;
-    const url = `?p=${idUrls?.p}&q=${q}`;
+    const url = `?p=${props.row}`;
     const urlb = `/dashboard/${itemUrl}/${itemsmenuprincipal}`;
     return (
         <OverlayTrigger trigger={['hover', 'focus']} placement="left" overlay={popover} key={props.key}>

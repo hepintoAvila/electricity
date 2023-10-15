@@ -1,16 +1,20 @@
 /* eslint-disable no-unreachable */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import Fields from './Fields';
 import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
 import ItemsOrdenCompra from './ItemsOrdenCompra';
 import VistaOrdenCompra from './VistaOrdenCompra';
+import { useGestionFinanciera } from '../../../../../hooks/useGestionFinanciera';
+ 
 const Forms = (props) => {
-    const { itemsUpdate, typeAcccion, itemsmenuprincipal, itemUrl } = useContext(DashboardContext);
+    const {itemsOrdenCompra,query } = useGestionFinanciera();
+    const { itemsUpdate, typeAcccion, itemsmenuprincipal, itemUrl,pagesInSearch } = useContext(DashboardContext);
     let Ids = localStorage.getItem('Ids');
     const idUrls = JSON.parse(Ids);
     const url = `?p=${idUrls?.p}&q=${idUrls?.q}`;
     const urlb = `/dashboard/${itemUrl}/`;
+   
     const objAdd = {
         urlVariables: url,
         urlBase: urlb,
@@ -20,6 +24,16 @@ const Forms = (props) => {
         tipo: itemsmenuprincipal,
         id: itemsUpdate?.id,
     };
+ 
+    useEffect(() => {
+        const id = pagesInSearch();
+        let str = '#/dashboard/GestionFinanciera/OrdenCompra?p=';
+        const idProyecto = id?.replace(str, '');
+        query('GestionFinanciera', 'OrdenCompra', [
+            { opcion: 'consuById', obj: 'OrdenCompra', id:idProyecto},
+        ]);
+    }, []);
+ 
     return (
         <React.Fragment>
             {(() => {
@@ -34,7 +48,7 @@ const Forms = (props) => {
                     case 'ADD':
                         return (
                             <>
-                                <ItemsOrdenCompra obj={objAdd} />
+                                <ItemsOrdenCompra obj={objAdd} data={itemsOrdenCompra?.data}/>
                             </>
                         );
                         break;

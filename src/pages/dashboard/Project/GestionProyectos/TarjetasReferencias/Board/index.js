@@ -191,7 +191,8 @@ const Kanban = (props): React$Element<React$FragmentType> => {
     };
 
     useEffect(() => {
-        if (itemsGestionarProyecto[0]?.status === '202') Swal.fire('' + itemsGestionarProyecto[0].menssage + '');
+        if (itemsGestionarProyecto[0]?.status === '202') 
+        Swal.fire('' + itemsGestionarProyecto[0].menssage + '');
     }, [itemsGestionarProyecto]);
 
     return (
@@ -215,13 +216,13 @@ const Kanban = (props): React$Element<React$FragmentType> => {
                                             <div>
                                                 <div className={classNames('mt-2 mb-3')}>
                                                     <span className="d-flex align-items-center">
-                                                        Search :{' '}
-                                                        <input
+                                                        
+                                                        {/* Search :{' '} <input
                                                             value={searchTerm}
                                                             onChange={(e) => setSearchTerm(e.target.value)}
                                                             placeholder={`${state.todoTasks.length} registros...`}
                                                             className="form-control w-auto ms-1"
-                                                        />
+                                    />*/}
                                                     </span>
                                                 </div>
                                                 <h5 className="mt-0 task-header">TODO ({state.todoTasks.length})</h5>

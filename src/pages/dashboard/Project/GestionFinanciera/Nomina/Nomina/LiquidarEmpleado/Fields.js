@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Button, Alert, Form, Col, Row } from 'react-bootstrap';
@@ -46,25 +46,52 @@ const Register = (props): React$Element<React$FragmentType> => {
   const [formattedValue, setFormattedValue] = useState(0);
   const [subTotalValue, setSubTotalValue] = useState(0);
   const [Total, setTotalValue] = useState(0);
+  const [opcionsUpdate, setOpcionsUpdate] = useState([]);
+  const [optionsAdd, setOptionsAdd] = useState([]);
+ 
+  const dispatch = useDispatch();
+
+
   const handleInputChange = (event) => {
     const rawValue = event.target.value;
     const formatted = parseFloat(rawValue.replace(",", ".")).toLocaleString("es-ES", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
-    setInputValue(rawValue);
-    setNomina([{ ...nomina[0], Valor: rawValue, IdEmpleado: props?.Empleado?.id, IdNomina: Number(props?.Nomina[0]?.id) > 0 ? Number(props?.Nomina[0]?.id) : Number(props?.title)  ,tipo:'Nomina',accion:'GestionFinanciera',opcion:props?.opcion,Concepto:nomina[0]?.Concepto ,Salario:props?.Empleado?.Salario}])
+    const monto = multiplicar(Number(nomina[0]?.monto), Number(nomina[0]?.Salario))
+
+
+    setInputValue(monto/100);
+
     setFormattedValue(formatted);
-    const subtotal = multiplicar(rawValue, Number(nomina[0]?.Cantidad))
+   
+    const subtotal = multiplicar(monto/100, Number(rawValue))
     const subtotalc = ParseFloat(subtotal, 9);
     setSubTotalValue(subtotalc);
     //TOTAL DEL SALARIO
-    const salario = ParseFloat(props?.Empleado?.Salario, 6);
-    const t = salario + subtotal
-    const total = ParseFloat(t, 9);
-    setTotalValue(total);
+    const salario = props?.Empleado?.Salario;
+    const valLiquidado = nomina[0]?.status===0?  Number(salario) + Number(subtotalc):Number(salario) - Number(subtotalc)
+    setTotalValue(valLiquidado);
+    setNomina([{ ...nomina[0], 
+      monto:Number(event.Porcentaje), 
+      Cantidad: rawValue, 
+      IdEmpleado: props?.Empleado?.id, 
+      IdNomina: Number(props?.Nomina[0]?.id) > 0 ? Number(props?.Nomina[0]?.id) : Number(props?.title) ,
+      tipo:'NominaEmpleado',
+      accion:'GestionFinanciera',
+      opcion:props?.opcion,
+      Concepto:nomina[0]?.Concepto,
+      Salario:props?.Empleado?.Salario, 
+      status:nomina[0]?.status,
+      monto:nomina[0]?.monto,
+      idConcepto:nomina[0]?.id,
+      id:nomina[0]?.id,
+      subTotal:subtotalc,
+    }])
   };
-  const dispatch = useDispatch();
+
+
+
 
   const {loading,queryForm, error } = useSelector((state) => ({
     loading: state.Queryform.loading,
@@ -93,11 +120,16 @@ const Register = (props): React$Element<React$FragmentType> => {
       setActions(openActions);
     }, 2000);
   };
-  const filteredConcepto = props?.Conceptos?.filter((row) => {
-    return row?.Concepto === props?.Nomina[0]?.Concepto;
-  });
-  const opcions = [props?.Conceptos, filteredConcepto]
-  const output = flattenArray(opcions, props?.Nomina[0]?.Concepto);
+
+  useEffect(() => {
+    const filteredConcepto = props?.Conceptos?.filter((row) => {
+      return row?.Concepto.replace(/\s/g, '') === props?.Nomina[0]?.Concepto.replace(/\s/g, '');
+    });
+
+    setOpcionsUpdate(filteredConcepto);
+    setOptionsAdd(props?.Conceptos);
+  }, [props?.Nomina[0]?.Concepto])
+
 
   return (
     <>
@@ -111,35 +143,51 @@ const Register = (props): React$Element<React$FragmentType> => {
         </Alert>
       )}
       <VerticalForm onSubmit={onSubmit} resolver={schemaResolver} defaultValues={{}}>
-        <Row>
-          <Col sm={4}>
+      <Row>
             <Form.Group className="mb-3" controlId="Concepto">
-              <Form.Label>Concepto</Form.Label>
-              <Select
+              <Form.Label>Concepto: </Form.Label>
+             <Select
                 type="select"
                 name="Concepto"
                 className="react-select"
                 classNamePrefix="react-select"
-                onChange={(e) => setNomina([{ ...nomina[0], Concepto: e.label, IdEmpleado: props?.Empleado?.id, IdNomina: Number(props?.Nomina[0]?.id) > 0 ? Number(props?.Nomina[0]?.id) : Number(props?.title) ,tipo:'Nomina',accion:'GestionFinanciera',opcion:props?.opcion,Salario:props?.Empleado?.Salario}])}
-                options={output}
+                onChange={(e) => setNomina([
+                  { ...nomina[0],
+                     Concepto: e.label, 
+                     IdEmpleado: props?.Empleado?.id, 
+                     IdNomina: Number(props?.Nomina[0]?.id) > 0 ? Number(props?.Nomina[0]?.id) : Number(props?.title) ,
+                     tipo:'NominaEmpleado',
+                     accion:'GestionFinanciera',
+                     opcion:props?.opcion,
+                     Salario:props?.Empleado?.Salario,
+                     monto:e.Porcentaje,
+                     status:e.status,
+                     idConcepto:e.value,
+                     id:e.id,
+                     subTotal:nomina[0]?.subTotal,
+                    }])}
+                options={props?.opcion==='add'? optionsAdd : opcionsUpdate}
                 placeholder="Selecione el Estado..."
-                selected={nomina?.Concepto}
+                selected={nomina[0]?.Concepto}
               />
               <Form.Control.Feedback type="invalid">
                 Por favor, digite la Ciudad.
               </Form.Control.Feedback>
             </Form.Group>
-          </Col>
+          </Row>
+        <Row>
+
           <Col sm={2}>
             <Form.Group className="mb-3" controlId="Cantidad">
               <Form.Label>Cantidad </Form.Label>
               <Form.Control
                 required
+                min={0}
                 type="number"
                 name="Cantidad"
                 placeholder="Digite la Cantidad"
                 value={nomina[0]?.Cantidad}
-                onChange={(e) => setNomina([{ ...nomina[0], Cantidad: e.target.value, IdEmpleado: props?.Empleado?.id, IdNomina: Number(props?.Nomina[0]?.id) > 0 ? Number(props?.Nomina[0]?.id) : Number(props?.title) ,tipo:'Nomina',accion:'GestionFinanciera',opcion:props?.opcion,Concepto:nomina[0]?.Concepto,Salario:props?.Empleado?.Salario }])}
+                onChange={(e) => handleInputChange(e)}
               />
               <Form.Control.Feedback type="invalid">
                 Por favor, digite la Cantidad.
@@ -175,7 +223,7 @@ const Register = (props): React$Element<React$FragmentType> => {
           <Col sm={12}>
             <div className="float-left mt-3 mt-sm-0">
               <p>
-                <b>Sub-total:</b> <span className="float-left">{formattedValue} * {nomina[0]?.Cantidad} = {subTotalValue}</span>
+                <b>Sub-total:</b> <span className="float-left">{formattedValue} * {inputValue} = {subTotalValue}</span>
               </p>
               <p>
                 <b>Salario:</b> <span className="mb-0 font-13"> {props?.Empleado?.Salario}</span>
