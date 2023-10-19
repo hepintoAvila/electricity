@@ -8,7 +8,7 @@ import { Button, Alert, Form, Col, Row } from 'react-bootstrap';
 import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
 
 const LiquidarCantidad = (props): React$Element<React$FragmentType> => {
-    const { setOpen, open, setRow} = useContext(DashboardContext);
+    const { setOpen, open, setRow,max} = useContext(DashboardContext);
     const [cantidadInput, setCantidadInput] = useState(0);
     const [items, setItems] = useState([
         {
@@ -20,7 +20,7 @@ const LiquidarCantidad = (props): React$Element<React$FragmentType> => {
             tipo: props?.obj?.tipo,
             id: props?.obj?.id,
             idApu: props?.obj?.idItems,
-            max: props?.obj?.max,
+            max: max,
         },
     ]);
 
@@ -59,7 +59,7 @@ const LiquidarCantidad = (props): React$Element<React$FragmentType> => {
         setCantidadInput(num);
     }, [items[0]?.Cantidad]);
 
-//console.log('items[0]?.Cantidad',items[0]?.Cantidad,items[0].max)
+console.log('items[0]?.Cantidad',max)
     return (
         <>
             {queryForm ? (

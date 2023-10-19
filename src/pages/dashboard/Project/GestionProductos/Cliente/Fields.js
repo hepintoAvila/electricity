@@ -59,7 +59,7 @@ const onSubmit = () => {
 };
 
 useEffect(() => {
-  const num = Number(items[0]?.Identificacion) >= 100000000 ? 0 : Number(items[0]?.Identificacion)
+  const num = Number(items[0]?.Identificacion) >= 10000000000 ? 0 : Number(items[0]?.Identificacion)
   setIdentificacion(num);
 }, [items[0]?.Identificacion]);
 
@@ -85,7 +85,7 @@ useEffect(() => {
               type="number"
               name="Identificacion"
               placeholder="Digite la Identificacion"
-              value={identificacion}
+              value={items[0]?.Identificacion}
               onChange={(e) => setItems([{ ...items[0], Identificacion: e.target.value }])}
             />
 

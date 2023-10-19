@@ -38,8 +38,6 @@ const TaskItemB = (props: TaskItemProps): React$Element<any> => {
             props.setCoutPage({ Total: Number(props.currentCout + total) });
             if (valorUnitario >= 2) {
                 props.update(task.id, props.idProyecto, total, valorUnitario);
-            }else{
-                Swal.fire('Seleccione un numero mayor 1');   
             }
 
         

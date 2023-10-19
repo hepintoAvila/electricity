@@ -24,7 +24,7 @@ const ActionColumn = ({ row }) => {
             setOpen(open);
             toggle();
             setTypeActions('UPDATE');
-            setMax(row.cells[3].value);
+            setMax(row.cells[5].value);
         } else {
             Swal.fire('USTED NO TIENE PERMISOS HABILITADOS PARA ESTA OPCION');
         }
