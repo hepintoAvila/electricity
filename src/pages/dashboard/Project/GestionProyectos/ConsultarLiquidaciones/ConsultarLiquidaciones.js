@@ -71,6 +71,11 @@ const ConsultarLiquidaciones = (props) => {
             sort: true,
         },
         {
+            Header: 'Fecha Liquidación',
+            accessor: 'maj',
+            sort: true,
+        },
+        {
             Header: 'Action',
             accessor: 'action',
             sort: false,

@@ -83,7 +83,7 @@ export const ConsultaLiquidadas = (props) => {
         localStorage.removeItem('Ids');
         localStorage.setItem('Ids', JSON.stringify({ p: idProyecto, q: idLiquidacion }));
     }, [idProyecto, idLiquidacion]);
-    console.log('💕💕', itemsGestionarProyecto);
+    //console.log('💕💕', itemsGestionarProyecto);
     return (
         <>
             <Row>

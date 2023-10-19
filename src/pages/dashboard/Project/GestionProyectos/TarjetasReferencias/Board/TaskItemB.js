@@ -5,7 +5,8 @@ import { Card, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
+ 
 type TaskItemProps = {
     task: {
         id: number,
@@ -29,13 +30,19 @@ const TaskItemB = (props: TaskItemProps): React$Element<any> => {
     const [valorUnitario, setState] = useState(0);
     const [totalValorUnitario, setValorUnitario] = useState(0);
 
+
     useEffect(() => {
-        const total = Number(valorUnitario) * Number(valor);
-        setValorUnitario(total);
-        props.setCoutPage({ Total: Number(props.currentCout + total) });
-        if (valorUnitario >= 2) {
-            props.update(task.id, props.idProyecto, total, valorUnitario);
-        }
+       
+            const total = Number(valorUnitario) * Number(valor);
+            setValorUnitario(total);
+            props.setCoutPage({ Total: Number(props.currentCout + total) });
+            if (valorUnitario >= 2) {
+                props.update(task.id, props.idProyecto, total, valorUnitario);
+            }else{
+                Swal.fire('Seleccione un numero mayor 1');   
+            }
+
+        
     }, [valorUnitario]);
 
     return (
@@ -65,9 +72,11 @@ const TaskItemB = (props: TaskItemProps): React$Element<any> => {
                         })}
                         style={{ width: '85%' }}>
                         <input
+                            value={valorUnitario}
                             name={task.id}
                             placeholder={task.Cantidad}
                             type="number"
+                            min={0}
                             key={task.id}
                             onChange={(e) => {
                                 setState(e.target.value);

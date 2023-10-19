@@ -1,4 +1,4 @@
-import React,{useContext,useState} from 'react';
+import React,{useContext,useEffect,useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert,Button, Form, Row, Col } from 'react-bootstrap';
@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 const Fields = (props) => {
   const {query} = useGestionFinanciera()
 const {setActions,openActions} = useContext(DashboardContext);
+const [identificacion, setIdentificacion] = useState(0);
+const [salario, setSalario] = useState(0);
 
 const [items, setItems] = useState([{
   Identificacion: props?.items?.Identificacion ? props?.items?.Identificacion : '',
@@ -58,7 +60,16 @@ const onSubmit = () => {
     query('GestionFinanciera', 'Empleado', [{ opcion: 'consultar', obj: 'Empleado' }]);
   }, 1000);
 };
+useEffect(() => {
+  const num = Number(items[0]?.Identificacion) >= 100000000 ? 0 : Number(items[0]?.Identificacion)
+  setIdentificacion(num);
+}, [items[0]?.Identificacion]);
 
+
+useEffect(() => {
+  const num = Number(items[0]?.Salario) >= 100000000 ? 0 : Number(items[0]?.Salario)
+  setSalario(num);
+}, [items[0]?.Salario]);
   return (
 
   <React.Fragment>
@@ -81,7 +92,7 @@ const onSubmit = () => {
               type="number"
               name="Identificacion"
               placeholder="Digite la Identificacion"
-              value={items[0]?.Identificacion}
+              value={identificacion}
               onChange={(e) => setItems([{ ...items[0], Identificacion: e.target.value }])}
             />
 
@@ -170,7 +181,7 @@ const onSubmit = () => {
               type="number"
               name="Salario"
               placeholder="Digite el Salario"
-              value={items[0]?.Salario}
+              value={salario}
               onChange={(e) => setItems([{ ...items[0], Salario: e.target.value }])}
             />
             <Form.Control.Feedback type="invalid">

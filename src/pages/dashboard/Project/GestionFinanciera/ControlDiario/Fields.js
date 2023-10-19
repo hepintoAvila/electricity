@@ -1,4 +1,4 @@
-import React,{useContext,useState} from 'react';
+import React,{useContext,useEffect,useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert,Button, Form, Row, Col } from 'react-bootstrap';
@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 const Fields = (props) => {
   const {query} = useGestionFinanciera()
 const {setActions,openActions} = useContext(DashboardContext);
+const [control, setControl] = useState(0);
 
 const [items, setItems] = useState([{
   Ciudad: props?.items?.Ciudad ? props?.items?.Ciudad : '',
@@ -59,6 +60,11 @@ const onSubmit = () => {
   }, 2000);
 };
 
+
+useEffect(() => {
+  const num = Number(items[0]?.Valor) >= 100000000 ? 0 : Number(items[0]?.Valor)
+  setControl(num);
+}, [items[0]?.Valor]);
   return (
 
   <React.Fragment>
@@ -169,7 +175,7 @@ const onSubmit = () => {
               type="number"
               name="Valor"
               placeholder="Digite el Valor"
-              value={items[0]?.Valor}
+              value={control}
               onChange={(e) => setItems([{ ...items[0], Valor: e.target.value }])}
             />
             <Form.Control.Feedback type="invalid">

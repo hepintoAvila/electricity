@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 
 const Register = (props): React$Element<React$FragmentType> => {
     //const { setOpen, open } = useContext(DashboardContext);
+    const [cantidadInput, setCantidadInput] = useState(0);
     const [items, setItems] = useState([
         {
             Categoria: props?.ItemsUpdate?.length === 1 ? props?.ItemsUpdate[0]?.Nombre : '',
@@ -53,6 +54,13 @@ const Register = (props): React$Element<React$FragmentType> => {
             }
         }, 1000);
     };
+
+    
+    useEffect(() => {
+        const num = Number(items[0]?.Cantidad) >= 1000000000000? 0: Number(items[0]?.Cantidad)
+        setCantidadInput(num);
+    }, [items[0]?.Cantidad]);
+
 
     return (
         <>
@@ -112,8 +120,9 @@ const Register = (props): React$Element<React$FragmentType> => {
                                 required
                                 type="text"
                                 name="Cantidad"
+                                min={0}
                                 placeholder="Digite la Cantidad"
-                                value={items[0]?.Cantidad}
+                                value={cantidadInput}
                                 onChange={(e) => setItems([{ ...items[0], Cantidad: e.target.value }])}
                             />
                             <Form.Control.Feedback type="invalid">Por favor, digite la Cantidad.</Form.Control.Feedback>

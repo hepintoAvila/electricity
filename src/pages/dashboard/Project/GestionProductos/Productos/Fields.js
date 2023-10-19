@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Button, Alert, Form, Col, Row } from 'react-bootstrap';
@@ -16,6 +16,9 @@ import Swal from 'sweetalert2';
 const Register = (props): React$Element<React$FragmentType> => {
   const {query} = useGestionFinanciera()
   const { setOpen, open } = useContext(DashboardContext);
+  const [cantidadInput1, setCantidadInput1] = useState(0);
+  const [cantidadInput2, setCantidadInput2] = useState(0);
+  
 
   const [items, setItems] = useState([{
     Nombre: props?.ItemsUpdate?.length === 1 ? props?.ItemsUpdate[0]?.Nombre : '',
@@ -61,6 +64,16 @@ const Register = (props): React$Element<React$FragmentType> => {
     { value: 'TRANSPORTE', label: '3.TRANSPORTE' },
     { value: 'MANO DE OBRA', label: '4.MANO DE OBRA' }
   ]
+  useEffect(() => {
+    const num = Number(items[0]?.Cantidad) >= 10000000000 ? 0 : Number(items[0]?.Cantidad)
+    setCantidadInput1(num);
+}, [items[0]?.Cantidad]);
+
+useEffect(() => {
+  const num = Number(items[0]?.ValorUnitario) >= 10000000000 ? 0 : Number(items[0]?.ValorUnitario)
+  setCantidadInput2(num);
+}, [items[0]?.ValorUnitario]);
+
   return (
     <>
       {queryForm ? <Redirect to={`/dashboard/${props?.accion}/${props?.tipo}`}></Redirect> : null}
@@ -121,10 +134,13 @@ const Register = (props): React$Element<React$FragmentType> => {
               <Form.Label>Cantidad</Form.Label>
               <Form.Control
                 required
+                inputMode="numeric"
                 type="number"
+                min={0}
+                max={10000}
                 name="Cantidad"
                 placeholder="Digite la Cantidad"
-                value={items[0]?.Cantidad}
+                value={cantidadInput1}
                 onChange={(e) => setItems([{ ...items[0], Cantidad: e.target.value }])}
               />
               <Form.Control.Feedback type="invalid">
@@ -139,9 +155,12 @@ const Register = (props): React$Element<React$FragmentType> => {
             <Form.Control
               required
               type="number"
+              inputMode="numeric"
+              min={0}
+              max={10000}
               name="ValorUnitario"
               placeholder="Digite el Valor Unitario"
-              value={items[0]?.ValorUnitario}
+              value={cantidadInput2}
               onChange={(e) => setItems([{ ...items[0], ValorUnitario: e.target.value }])}
             />
             <Form.Control.Feedback type="invalid">

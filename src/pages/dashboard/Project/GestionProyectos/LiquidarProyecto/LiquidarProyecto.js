@@ -62,7 +62,7 @@ const ActionColumn = ({ row }) => {
                         title={`${row.cells[2].value}`}
                         idApu={`${row.cells[0].value}`}
                         validated={validated}
-                        max={row.cells[3].value}
+                        max={row.cells[5].value}
                     />
                 </BtnSeccionAction>
             )}
@@ -136,6 +136,11 @@ export const LiquidarProyecto = (props) => {
         {
             Header: 'Vr.Unitario',
             accessor: 'ValorUnitario',
+            sort: true,
+        },
+        {
+            Header: 'Fecha Liquidacion',
+            accessor: 'maj',
             sort: true,
         },
         {

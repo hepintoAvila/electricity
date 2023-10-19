@@ -29,6 +29,7 @@ const Register = (props) => {
     const { setActions, openActions } = useContext(DashboardContext);
     const { query } = useGestionPrecios();
     const [detalles, setDetalles] = useState([]);
+    const [cantidadInput, setCantidadInput] = useState(0);
     const data = props?.Categorias || [];
     const [items, setItems] = useState([
         {
@@ -100,6 +101,11 @@ const Register = (props) => {
             setActions(openActions);
         }, 2000);
     };
+
+    useEffect(() => {
+        const num = Number(items[0]?.Cantidad) >= 1000000000000? 0: Number(items[0]?.Cantidad)
+        setCantidadInput(num);
+    }, [items[0]?.Cantidad]);
     return (
         <>
             {queryForm ? <Redirect to={`/dashboard/${props?.accion}/${props?.tipo}`}></Redirect> : null}
@@ -160,10 +166,11 @@ const Register = (props) => {
                             <Form.Label>Cantidad</Form.Label>
                             <Form.Control
                                 required
+                                min={0}
                                 type="number"
                                 name="Cantidad"
                                 placeholder={detalles?.Cantidad}
-                                value={items[0]?.Cantidad}
+                                value={cantidadInput}
                                 onChange={(e) => setItems([{ ...items[0], Cantidad: e.target.value }])}
                             />
                             <Form.Control.Feedback type="invalid">Por favor, digite la Cantidad.</Form.Control.Feedback>

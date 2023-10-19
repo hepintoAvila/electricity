@@ -1,4 +1,4 @@
-import React,{useContext,useState} from 'react';
+import React,{useContext,useEffect,useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert,Button, Form, Row, Col } from 'react-bootstrap';
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 const Fields = (props) => {
   const {query} = useGestionFinanciera()
 const {setOpen,open} = useContext(DashboardContext);
-
+const [identificacion, setIdentificacion] = useState(0);
 const [items, setItems] = useState([{
   Identificacion: props?.items?.Identificacion ? props?.items?.Identificacion : '',
   Email: props?.items?.Email ? props?.items?.Email : '',
@@ -58,6 +58,11 @@ const onSubmit = () => {
   }, 1000);
 };
 
+useEffect(() => {
+  const num = Number(items[0]?.Identificacion) >= 100000000 ? 0 : Number(items[0]?.Identificacion)
+  setIdentificacion(num);
+}, [items[0]?.Identificacion]);
+
   return (
 
   <React.Fragment>
@@ -80,7 +85,7 @@ const onSubmit = () => {
               type="number"
               name="Identificacion"
               placeholder="Digite la Identificacion"
-              value={items[0]?.Identificacion}
+              value={identificacion}
               onChange={(e) => setItems([{ ...items[0], Identificacion: e.target.value }])}
             />
 
@@ -94,7 +99,7 @@ const onSubmit = () => {
             <Form.Label>Email</Form.Label>
             <Form.Control
               required
-              type="text"
+              type="email"
               containerClass={'mb-3'}
               name="Email"
               placeholder="Digite el email"

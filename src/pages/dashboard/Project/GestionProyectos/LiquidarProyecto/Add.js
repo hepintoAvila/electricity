@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Button, Alert, Form, Col, Row } from 'react-bootstrap';
@@ -10,6 +10,8 @@ import { queryFormSend } from '../../../../../redux/actions';
 import { VerticalForm } from '../../../../../components';
 
 const Add = (props): React$Element<React$FragmentType> => {
+    const [porcentaje, setPorcentaje] = useState(0);
+     
     const [items, setItems] = useState([
         {
             importes: 0,
@@ -37,6 +39,11 @@ const Add = (props): React$Element<React$FragmentType> => {
             }
         }, 1000);
     };
+
+    useEffect(() => {
+        const num = Number(items[0]?.porcentaje) >= 1000000000000? 0: Number(items[0]?.porcentaje)
+        setPorcentaje(num);
+    }, [items[0]?.porcentaje]);
 
     return (
         <>
@@ -85,10 +92,10 @@ const Add = (props): React$Element<React$FragmentType> => {
                             <Form.Label>Porcentaje </Form.Label>
                             <Form.Control
                                 required
-                                type="number"
+                                type="number" 
                                 name="porcentaje"
                                 placeholder="Digite el porcentaje"
-                                value={items[0]?.porcentaje}
+                                value={porcentaje}
                                 onChange={(e) => setItems([{ ...items[0], porcentaje: e.target.value }])}
                             />
                             <Form.Control.Feedback type="invalid">Por favor, digite la Cantidad.</Form.Control.Feedback>

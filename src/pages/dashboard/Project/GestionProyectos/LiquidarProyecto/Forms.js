@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
 import Add from './Add';
 import LiquidarCantidad from './LiquidarCantidad';
+
 const Forms = (props) => {
     const { itemsUpdate, typeAcccion, itemsmenuprincipal, itemUrl } = useContext(DashboardContext);
     let Ids = localStorage.getItem('Ids');
@@ -22,6 +23,7 @@ const Forms = (props) => {
         title: props?.title,
         importes: props?.importes,
         idApu: props?.idApu,
+        max:props?.max,
     };
 
     return (
@@ -33,13 +35,16 @@ const Forms = (props) => {
                         return <>{'VISTA'}</>;
                         break;
                     case 'UPDATE':
+                        
                         return (
                             <>
                                 <LiquidarCantidad obj={objAdd} />
                             </>
                         );
                         break;
+
                     case 'ADD':
+                        
                         return (
                             <>
                                 <Add obj={objAdd} />

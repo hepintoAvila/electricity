@@ -70,6 +70,9 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
 const FormAdd = (props) => {
     const { setActions, openActions } = useContext(DashboardContext);
     const { query } = useGestionFinanciera();
+    const [cantidadInput, setCantidadInput] = useState(0);
+    const [valorUnitario, setValorUnitario] = useState(0);
+    
     const [items, setItems] = useState([
         {
             Descripcion: props?.items?.Descripcion ? props?.items?.Descripcion : '',
@@ -96,6 +99,19 @@ const FormAdd = (props) => {
             setActions(openActions);
         }, 2000);
     };
+
+    useEffect(() => {
+        const num = Number(items[0]?.Cantidad) >= 1000000000000? 0: Number(items[0]?.Cantidad)
+        setCantidadInput(num);
+    }, [items[0]?.Cantidad]);
+
+
+    useEffect(() => {
+        const num = Number(items[0]?.ValorUnitario) >= 1000000000000? 0: Number(items[0]?.ValorUnitario)
+        setValorUnitario(num);
+    }, [items[0]?.ValorUnitario]);
+
+    
     return (
         <>
             {queryForm ? (
@@ -123,10 +139,10 @@ const FormAdd = (props) => {
                                     <Form.Group className="mb-3" controlId="Cantidad">
                                         <Form.Control
                                             required
-                                            type="number"
+                                            type="number" 
                                             name="Cantidad"
                                             placeholder="Digite la Cantidad"
-                                            value={items[0]?.Cantidad}
+                                            value={cantidadInput}
                                             onChange={(e) => setItems([{ ...items[0], Cantidad: e.target.value }])}
                                         />
                                         <Form.Control.Feedback type="invalid">
@@ -141,7 +157,7 @@ const FormAdd = (props) => {
                                             type="number"
                                             name="ValorUnitario"
                                             placeholder="Digite el Valor Unitario"
-                                            value={items[0]?.ValorUnitario}
+                                            value={valorUnitario}
                                             onChange={(e) => setItems([{ ...items[0], ValorUnitario: e.target.value }])}
                                         />
                                         <Form.Control.Feedback type="invalid">

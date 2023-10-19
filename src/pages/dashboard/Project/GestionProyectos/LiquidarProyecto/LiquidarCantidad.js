@@ -8,8 +8,8 @@ import { Button, Alert, Form, Col, Row } from 'react-bootstrap';
 import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
 
 const LiquidarCantidad = (props): React$Element<React$FragmentType> => {
-    const { setOpen, open, setCantidad, setRow, max } = useContext(DashboardContext);
-
+    const { setOpen, open, setRow} = useContext(DashboardContext);
+    const [cantidadInput, setCantidadInput] = useState(0);
     const [items, setItems] = useState([
         {
             importes: 0,
@@ -20,7 +20,7 @@ const LiquidarCantidad = (props): React$Element<React$FragmentType> => {
             tipo: props?.obj?.tipo,
             id: props?.obj?.id,
             idApu: props?.obj?.idItems,
-            max: max,
+            max: props?.obj?.max,
         },
     ]);
 
@@ -49,10 +49,17 @@ const LiquidarCantidad = (props): React$Element<React$FragmentType> => {
     };
 
     useEffect(() => {
-        setCantidad(items[0]?.Cantidad);
+        //setCantidad(items[0]?.Cantidad);
         setRow(items[0]?.idApu);
     }, [items]);
 
+
+    useEffect(() => {
+        const num = Number(items[0]?.Cantidad) >= Number(items[0].max) ? items[0].max : Number(items[0]?.Cantidad)
+        setCantidadInput(num);
+    }, [items[0]?.Cantidad]);
+
+//console.log('items[0]?.Cantidad',items[0]?.Cantidad,items[0].max)
     return (
         <>
             {queryForm ? (
@@ -81,11 +88,12 @@ const LiquidarCantidad = (props): React$Element<React$FragmentType> => {
                     <Form.Group className="mb-3" controlId="Cantidad">
                         <Form.Control
                             required
+                            min={0}
                             max={items[0].max}
                             type="number"
                             name="Cantidad"
-                            placeholder={max}
-                            value={items[0]?.Cantidad}
+                            placeholder={''}
+                            value={cantidadInput}
                             onChange={(e) => setItems([{ ...items[0], Cantidad: e.target.value }])}
                         />
                         <Form.Control.Feedback type="invalid">Por favor, digite la Cantidad.</Form.Control.Feedback>
