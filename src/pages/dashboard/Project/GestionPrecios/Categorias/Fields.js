@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 const Register = (props): React$Element<React$FragmentType> => {
   const {query} = useGestionPrecios()
   const { setOpen, open } = useContext(DashboardContext);
+
   const [items, setItems] = useState([{
     Categoria: props?.ItemsUpdate[0]?.Categoria,
     accion: props?.accion,

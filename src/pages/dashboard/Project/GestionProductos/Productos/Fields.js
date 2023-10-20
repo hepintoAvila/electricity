@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 
 const Register = (props): React$Element<React$FragmentType> => {
   const {query} = useGestionFinanciera()
-  const { setOpen, open } = useContext(DashboardContext);
+  const { setOpen, open,SoloNumeros} = useContext(DashboardContext);
   const [cantidadInput1, setCantidadInput1] = useState(0);
   const [cantidadInput2, setCantidadInput2] = useState(0);
   
@@ -137,6 +137,7 @@ useEffect(() => {
                 inputMode="numeric"
                 type="number"
                 min={0}
+                onKeyPress={SoloNumeros}
                 max={10000}
                 name="Cantidad"
                 placeholder="Digite la Cantidad"
@@ -157,6 +158,7 @@ useEffect(() => {
               type="number"
               inputMode="numeric"
               min={0}
+              onKeyPress={SoloNumeros}
               max={10000}
               name="ValorUnitario"
               placeholder="Digite el Valor Unitario"

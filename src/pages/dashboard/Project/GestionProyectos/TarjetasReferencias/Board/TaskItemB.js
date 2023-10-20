@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // @flow
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Card, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { DashboardContext } from '../../../../../../layouts/context/DashboardContext';
+ 
  
 type TaskItemProps = {
     task: {
@@ -29,8 +30,8 @@ const TaskItemB = (props: TaskItemProps): React$Element<any> => {
 
     const [valorUnitario, setState] = useState(0);
     const [totalValorUnitario, setValorUnitario] = useState(0);
-
-
+    const {SoloNumeros} = useContext(DashboardContext);
+    
     useEffect(() => {
        
             const total = Number(valorUnitario) * Number(valor);
@@ -70,6 +71,7 @@ const TaskItemB = (props: TaskItemProps): React$Element<any> => {
                         })}
                         style={{ width: '85%' }}>
                         <input
+                            onKeyPress={SoloNumeros}
                             value={valorUnitario}
                             name={task.id}
                             placeholder={task.Cantidad}

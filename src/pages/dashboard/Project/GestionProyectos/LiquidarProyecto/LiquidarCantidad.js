@@ -8,7 +8,7 @@ import { Button, Alert, Form, Col, Row } from 'react-bootstrap';
 import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
 
 const LiquidarCantidad = (props): React$Element<React$FragmentType> => {
-    const { setOpen, open, setRow,max} = useContext(DashboardContext);
+    const { setOpen, open, setRow,max,SoloNumeros} = useContext(DashboardContext);
     const [cantidadInput, setCantidadInput] = useState(0);
     const [items, setItems] = useState([
         {
@@ -89,6 +89,7 @@ console.log('items[0]?.Cantidad',max)
                         <Form.Control
                             required
                             min={0}
+                            onKeyPress={SoloNumeros}
                             max={items[0].max}
                             type="number"
                             name="Cantidad"

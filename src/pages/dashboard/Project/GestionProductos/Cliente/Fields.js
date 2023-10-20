@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 
 const Fields = (props) => {
   const {query} = useGestionFinanciera()
-const {setOpen,open} = useContext(DashboardContext);
+const {setOpen,open,SoloNumeros} = useContext(DashboardContext);
 const [identificacion, setIdentificacion] = useState(0);
 const [items, setItems] = useState([{
   Identificacion: props?.items?.Identificacion ? props?.items?.Identificacion : '',
@@ -82,6 +82,8 @@ useEffect(() => {
             <Form.Label>Identificación</Form.Label>
             <Form.Control
               required
+              min={0}
+              onKeyPress={SoloNumeros}
               type="number"
               name="Identificacion"
               placeholder="Digite la Identificacion"

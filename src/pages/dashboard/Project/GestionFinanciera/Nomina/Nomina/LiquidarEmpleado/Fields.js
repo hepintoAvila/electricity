@@ -40,7 +40,7 @@ function flattenArray(arr, Concepto) {
 }
 const Register = (props): React$Element<React$FragmentType> => {
 
-  const {setActions,openActions} = useContext(DashboardContext);
+  const {setActions,openActions,SoloNumeros} = useContext(DashboardContext);
   const [nomina, setNomina] = useState([]);
   const [inputValue, setInputValue] = useState(0);
   const [formattedValue, setFormattedValue] = useState(0);
@@ -183,6 +183,7 @@ const Register = (props): React$Element<React$FragmentType> => {
               <Form.Control
                 required
                 min={0}
+                onKeyPress={SoloNumeros}
                 type="number"
                 name="Cantidad"
                 placeholder="Digite la Cantidad"

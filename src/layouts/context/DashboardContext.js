@@ -29,7 +29,8 @@ const DashboardProvider = ({ children }) => {
     const [cantidad, setCantidad] = useState(0);
     const [idRow, setRow] = useState(0);
     const [max, setMax] = useState(0);
-
+    const [valideSoloNumeros, setValideSoloNumeros] = useState(0);
+    
     // función para obtener el valor de una cookie
     function getCookie(name) {
         var value = '; ' + document.cookie;
@@ -272,7 +273,23 @@ const DashboardProvider = ({ children }) => {
         }, []);
     };
 
+    const SoloNumeros= (e) => {
+        /*
+        const inputValor = e.target.value;
+        if (/^\d*$/.test(inputValor)) { // Comprueba si el valor solo contiene dígitos
+          setValideSoloNumeros({ valor: inputValor });
+        }else{
+            setValideSoloNumeros({ valor: 0 });   
+        }
+        */
+        if (e.key && !/\d/.test(e.key)) {
+            e.preventDefault(); // Evita que se ingresen caracteres no numéricos
+          }
+      }
     const data = {
+        SoloNumeros,
+        setValideSoloNumeros,
+        valideSoloNumeros,
         AdvertenciaLocalStorage,
         itemsMenuCallBack,
         setLoading,

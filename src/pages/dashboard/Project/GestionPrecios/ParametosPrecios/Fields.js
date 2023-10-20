@@ -10,7 +10,7 @@ import { queryFormSend } from '../../../../../redux/actions';
 import { VerticalForm } from '../../../../../components';
 
 const Register = (props)=> {
-const {query,setActions,openActions} = useContext(DashboardContext);
+const {query,setActions,openActions,SoloNumeros} = useContext(DashboardContext);
 
   const [items, setItems] = useState([{
     id: props?.ItemsUpdate[0]?.id,
@@ -76,6 +76,8 @@ const {query,setActions,openActions} = useContext(DashboardContext);
               <Form.Label>Cantidad</Form.Label>
               <Form.Control
                 required
+                min={0}
+                onKeyPress={SoloNumeros}
                 type="number"
                 name="Valor"
                 placeholder={items?.Valor}

@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Button, Alert, Form, Col, Row } from 'react-bootstrap';
@@ -10,9 +10,10 @@ import { queryFormSend } from '../../../../../redux/actions';
 import { VerticalForm } from '../../../../../components';
 import FormInput from '../../../components/FormInput';
 import Swal from 'sweetalert2';
+import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
 
 const Register = (props): React$Element<React$FragmentType> => {
-    //const { setOpen, open } = useContext(DashboardContext);
+    const { SoloNumeros } = useContext(DashboardContext);
     const [cantidadInput, setCantidadInput] = useState(0);
     const [items, setItems] = useState([
         {
@@ -121,6 +122,7 @@ const Register = (props): React$Element<React$FragmentType> => {
                                 type="text"
                                 name="Cantidad"
                                 min={0}
+                                onKeyPress={SoloNumeros}     
                                 placeholder="Digite la Cantidad"
                                 value={cantidadInput}
                                 onChange={(e) => setItems([{ ...items[0], Cantidad: e.target.value }])}
@@ -133,6 +135,8 @@ const Register = (props): React$Element<React$FragmentType> => {
                             <Form.Label>Valor Unitario </Form.Label>
                             <Form.Control
                                 required
+                                min={0}
+                                onKeyPress={SoloNumeros}     
                                 type="number"
                                 name="ValorUnitario"
                                 placeholder="Digite el ValorUnitario"

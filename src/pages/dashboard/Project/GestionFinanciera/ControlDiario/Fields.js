@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 
 const Fields = (props) => {
   const {query} = useGestionFinanciera()
-const {setActions,openActions} = useContext(DashboardContext);
+const {setActions,openActions,SoloNumeros} = useContext(DashboardContext);
 const [control, setControl] = useState(0);
 
 const [items, setItems] = useState([{
@@ -173,6 +173,7 @@ useEffect(() => {
             <Form.Control
               required
               type="number"
+              onKeyPress={SoloNumeros}
               name="Valor"
               placeholder="Digite el Valor"
               value={control}

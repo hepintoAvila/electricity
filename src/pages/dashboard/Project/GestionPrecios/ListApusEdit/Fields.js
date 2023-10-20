@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Button, Alert, Form, Col, Row } from 'react-bootstrap';
@@ -9,9 +9,10 @@ import { queryFormSend } from '../../../../../redux/actions';
 import { VerticalForm } from '../../../../../components';
 import FormInput from '../../../components/FormInput';
 import Swal from 'sweetalert2';
+import { DashboardContext } from '../../../../../layouts/context/DashboardContext';
 
 const Register = (props): React$Element<React$FragmentType> => {
-    //const { setOpen, open } = useContext(DashboardContext);
+    const { SoloNumeros} = useContext(DashboardContext);
     const [items, setItems] = useState([
         {
             Categoria: props?.ItemsUpdate?.length === 1 ? props?.ItemsUpdate[0]?.Nombre : '',
@@ -111,7 +112,8 @@ const Register = (props): React$Element<React$FragmentType> => {
                                 required
                                 type="number"
                                 name="Cantidad"
-                                max={'1'}
+                                min={1}
+                                onKeyPress={SoloNumeros}
                                 placeholder="1"
                                 value={items[0]?.Cantidad}
                                 onChange={(e) => setItems([{ ...items[0], Cantidad: e.target.value }])}

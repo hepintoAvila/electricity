@@ -23,7 +23,7 @@ function multiplicar(a,b){
 
 
 const Register = (props)=> {
-const {setActions,openActions} = useContext(DashboardContext);
+const {setActions,openActions,SoloNumeros} = useContext(DashboardContext);
   const [detalles, setDetalles] = useState([]);
 
   const obj = props?.ItemsUpdate
@@ -153,6 +153,8 @@ console.log('props.ItemsUpdate',props?.accion,props?.tipo)
               <Form.Label>Cantidad</Form.Label>
               <Form.Control
                 required
+                min={0}
+                onKeyPress={SoloNumeros}                
                 type="number"
                 name="Cantidad"
                 placeholder={items[0]?.Cantidad}

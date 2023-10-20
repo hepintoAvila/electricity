@@ -26,7 +26,8 @@ function multiplicar(a, b) {
 }
 
 const Register = (props) => {
-    const { setActions, openActions } = useContext(DashboardContext);
+
+    const { setActions, openActions,SoloNumeros } = useContext(DashboardContext);
     const { query } = useGestionPrecios();
     const [detalles, setDetalles] = useState([]);
     const [cantidadInput, setCantidadInput] = useState(0);
@@ -167,6 +168,7 @@ const Register = (props) => {
                             <Form.Control
                                 required
                                 min={0}
+                                onKeyPress={SoloNumeros}
                                 type="number"
                                 name="Cantidad"
                                 placeholder={detalles?.Cantidad}
@@ -185,6 +187,8 @@ const Register = (props) => {
                                 required
                                 type="text"
                                 disabled
+                                min={0}
+                                onKeyPress={SoloNumeros}
                                 name="ValorUnitario"
                                 placeholder={detalles?.ValorUnitarioDecimales}
                                 value={detalles?.ValorUnitarioDecimales}
